@@ -8,8 +8,8 @@ In Solidity, data types like *uint* and *int* are used to store numbers, but the
  - Shortcut for uint256
 
 ```bash 
-  uint balance = -100  //not valid
-  uint balance = 100  // valid
+  uint balance = -100;  //not valid
+  uint balance = 100;  // valid
  ```
 
 
@@ -21,8 +21,8 @@ In Solidity, data types like *uint* and *int* are used to store numbers, but the
 
 
   ```bash
-      int balance = -100 // valid  
-      int score = 100    // also valid
+      int balance = -100; // valid  
+      int score = 100;    // also valid
   ```
 
   ### Bit Sizes: uint8 to uint256
@@ -82,7 +82,7 @@ In Solidity, data types like *uint* and *int* are used to store numbers, but the
   ```bash
      uint8 max = 255;  
      max += 1; // Now 0!  
-     OVERFLOW!!!!
+    // OVERFLOW!!!!
   ```
 
 
@@ -359,6 +359,92 @@ contract SimpleBank {
 - Use with structs to simulate objects or records.
 
 Combine with arrays if you need a list of keys.
+
+### ENUM: When You Want Controlled Choices
+
+An enum (short for enumeration) lets you define a set of named options that a variable can take,nothing more, nothing less. It's like a menu of fixed states.
+
+You don’t want people entering weird or invalid statuses like "Alien mode" or "Maybe delivered". You want control.
+
+### Real-World Analogy: Pizza Delivery Status
+```
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract PizzaOrder {
+    enum Status { Ordered, Preparing, OutForDelivery, Delivered }
+
+    Status public currentStatus;
+
+    constructor() {
+        currentStatus = Status.Ordered;
+    }
+
+    function updateStatus() public {
+        if (currentStatus == Status.Ordered) {
+            currentStatus = Status.Preparing;
+        } else if (currentStatus == Status.Preparing) {
+            currentStatus = Status.OutForDelivery;
+        } else if (currentStatus == Status.OutForDelivery) {
+            currentStatus = Status.Delivered;
+        }
+    }
+
+    function getStatus() public view returns (string memory) {
+        if (currentStatus == Status.Ordered) return "Order placed!";
+        if (currentStatus == Status.Preparing) return "We're making your pizza.";
+        if (currentStatus == Status.OutForDelivery) return "Your pizza is on the way!";
+        return "Enjoy your pizza 🍕";
+    }
+}
+```
+
+### Summary:
+ - Behind the scenes, enum Status { ... } is stored as integers starting from 0.
+
+- Safer than using strings or raw numbers.
+
+- Makes code more readable and less error-prone.
+
+### STRUCT: When You Want to Bundle Data Together
+
+A struct lets you define your own data type that groups variables under one name.      
+Like a custom object or record.
+
+#### Real-World Analogy: A Resume
+
+```// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract JobPortal {
+    struct Applicant {
+        string name;
+        uint age;
+        bool hasPortfolio;
+    }
+
+    Applicant public person;
+
+    function setApplicant(string memory _name, uint _age, bool _hasPortfolio) public {
+        person = Applicant(_name, _age, _hasPortfolio);
+    }
+
+    function getApplicant() public view returns (string memory, uint, bool) {
+        return (person.name, person.age, person.hasPortfolio);
+    }
+}
+```
+
+ #### When to Use struct:
+- User profiles
+
+- Product info
+
+- NFT metadata
+
+- Employee records
+
+- Grouping multiple variables that belong together
 
 
 
