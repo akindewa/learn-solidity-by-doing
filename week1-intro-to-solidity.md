@@ -22,7 +22,7 @@ In Solidity, data types like *uint* and *int* are used to store numbers, but the
 
   ```bash
       int balance = -100 // valid  
-      int score = 100;    // also valid
+      int score = 100    // also valid
   ```
 
   ### Bit Sizes: uint8 to uint256
