@@ -350,7 +350,7 @@ contract SimpleBank {
 }
 ```
 ### Summary
-- Mappings are powerful — like mini databases on-chain.
+- Mappings are powerful, like mini databases on-chain.
 
 - Can’t be looped, can’t be checked for existence, always return defaults.
 
